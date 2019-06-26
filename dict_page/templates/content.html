@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+          <button class="close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+          </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    <form class="form-inline my-2 my-lg-0" method="POST" action = "{% url 'content' %}">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Add new word" aria-label="" name="word" value='{{ form.word.value|default_if_none:"" }}'>
+      <input class="form-control mr-sm-2" type="search" placeholder="Add definition" aria-label="" name="definition" value='{{ form.definition.value|default_if_none:"" }}'>
+      <button class="btn btn-primary my-2 my-sm-0" type="submit">Add</button>
+    </form>
+
+    <p></p>
+
+{% if all_words %}
+	<table class="table table-bordered">
+		{% for w in all_words %}
+				<tr>
+					<td><a>{{ w.word }}</a></td>
+                    <td><a>{{ w.definition }}</a></td>
+					<td><center><a href="{% url 'delete' w.id %}">Delete</a></center></td>
+				</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+
+
+{% endblock %}

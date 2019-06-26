@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+     {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger alert-dismissable" role="alert">
+          <button class="close" data-dismiss="alert">
+              <small><sup>x</sup></small>
+          </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'query' %}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Enter word" aria-label="" name='word' value='{{ form.word.value|default_if_none:"" }}'>
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <p></p>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+      <p>
+           {{ definition }}
+      </p>
+      </div>
+    </div>
+
+
+{% endblock %}
